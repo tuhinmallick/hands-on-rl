@@ -111,8 +111,7 @@ def get_tensorboard_writer(run_name: str):
 
     from torch.utils.tensorboard import SummaryWriter
     from src.config import TENSORBOARD_LOG_DIR
-    tensorboard_writer = SummaryWriter(TENSORBOARD_LOG_DIR / 'sml' / run_name)
-    return tensorboard_writer
+    return SummaryWriter(TENSORBOARD_LOG_DIR / 'sml' / run_name)
 
 
 def get_train_val_loop(

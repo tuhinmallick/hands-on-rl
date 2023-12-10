@@ -15,14 +15,7 @@ class MomentumAgent(BaseAgent):
         """
         velocity = state[1]
 
-        if velocity > 0:
-            # accelerate to the right
-            action = 2
-        else:
-            # accelerate to the left
-            action = 0
-
-        return action
+        return 2 if velocity > 0 else 0
 
     def update_parameters(self, state, action, reward, next_state, epsilon):
         pass

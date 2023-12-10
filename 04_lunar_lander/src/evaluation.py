@@ -18,8 +18,7 @@ def evaluate(
     reward_per_episode = []
     steps_per_episode = []
 
-    for i in tqdm(range(0, n_episodes)):
-
+    for _ in tqdm(range(0, n_episodes)):
         state = env.reset()
         rewards = 0
         steps = 0

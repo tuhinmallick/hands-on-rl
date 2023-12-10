@@ -35,10 +35,7 @@ def get_agent_id(env_name: str) -> str:
             ids.append(int(id))
         except:
             pass
-    if len(ids) > 0:
-        agent_id = max(ids) + 1
-    else:
-        agent_id = 0
+    agent_id = max(ids) + 1 if ids else 0
     # stop()
 
     return str(agent_id)
@@ -109,11 +106,7 @@ def get_observation_samples(env: gym.Env, n_samples: int) -> np.array:
         action = env.action_space.sample()
         next_state, reward, done, info = env.step(action)
 
-        if done:
-            state = env.reset()
-        else:
-            state = next_state
-
+        state = env.reset() if done else next_state
     return np.array(samples)
 
 
