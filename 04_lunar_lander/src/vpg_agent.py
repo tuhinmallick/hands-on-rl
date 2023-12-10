@@ -85,7 +85,7 @@ class VPGAgent:
         """
         """
         total_steps = 0
-        save_model = True if model_path is not None else False
+        save_model = model_path is not None
 
         best_avg_reward = -np.inf
 
@@ -132,8 +132,7 @@ class VPGAgent:
         self.env.seed(seed)
         self.env.action_space.seed(seed)
 
-        for i in tqdm(range(0, n_episodes)):
-
+        for _ in tqdm(range(0, n_episodes)):
             state = self.env.reset()
             rewards = 0
             done = False

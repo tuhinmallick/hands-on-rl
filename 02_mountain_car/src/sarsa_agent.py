@@ -38,13 +38,10 @@ class SarsaAgent(BaseAgent):
         """"""
         if epsilon and random.uniform(0, 1) < epsilon:
             # Explore action space
-            action = self.env.action_space.sample()
-        else:
-            # Exploit learned values
-            state_discrete = self._discretize_state(state)
-            action = np.argmax(self.q_table[state_discrete[0], state_discrete[1]])
-        
-        return action
+            return self.env.action_space.sample()
+        # Exploit learned values
+        state_discrete = self._discretize_state(state)
+        return np.argmax(self.q_table[state_discrete[0], state_discrete[1]])
 
     def update_parameters(self, state, action, reward, next_state, epsilon):
         """"""

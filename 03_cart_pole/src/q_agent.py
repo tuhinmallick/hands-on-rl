@@ -201,12 +201,7 @@ class QAgent:
 
         # state = np.copy(state_)
 
-        if len(state.shape) == 1:
-            # add extra dimension to make sure it is 2D
-            s = state.reshape(1, -1)
-        else:
-            s = state
-
+        s = state.reshape(1, -1) if len(state.shape) == 1 else state
         if self.normalize_state:
             s = self._normalize_state(s)
 
@@ -222,10 +217,7 @@ class QAgent:
             epsilon = self.epsilon
 
         if random.uniform(0, 1) < epsilon:
-            # Explore action space
-            action = self.env.action_space.sample()
-            return action
-
+            return self.env.action_space.sample()
         # make sure s is a numpy array with 2 dimensions,
         # and normalize it if `self.normalize_state = True`
         s = self._preprocess_state(state)
@@ -270,8 +262,7 @@ class QAgent:
             self._copy_params_to_target_q_net()
 
         losses = []
-        for i in range(0, self.n_gradient_steps):
-
+        for _ in range(0, self.n_gradient_steps):
             # get batch of experiences from the agent's memory.
             batch = self.memory.sample(self.batch_size)
 
@@ -388,10 +379,7 @@ def parse_arguments():
 
     args = parser.parse_args()
 
-    args_dict = {}
-    for arg in vars(args):
-        args_dict[arg] = getattr(args, arg)
-
+    args_dict = {arg: getattr(args, arg) for arg in vars(args)}
     print('Hyper-parameters')
     for key, value in args_dict.items():
         print(f'{key}: {value}')

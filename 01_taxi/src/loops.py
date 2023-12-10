@@ -22,8 +22,7 @@ def train(
     timesteps_per_episode = []
     penalties_per_episode = []
 
-    for i in tqdm(range(0, n_episodes)):
-
+    for _ in tqdm(range(0, n_episodes)):
         state = env.reset()
 
         epochs, penalties, reward, = 0, 0, 0
@@ -31,13 +30,11 @@ def train(
 
         while not done:
 
-            if random.uniform(0, 1) < epsilon:
-                # Explore action space
-                action = env.action_space.sample()
-            else:
-                # Exploit learned values
-                action = agent.get_action(state)
-
+            action = (
+                env.action_space.sample()
+                if random.uniform(0, 1) < epsilon
+                else agent.get_action(state)
+            )
             next_state, reward, done, info = env.step(action)
 
             agent.update_parameters(state, action, reward, next_state)
@@ -73,8 +70,7 @@ def evaluate(
     penalties_per_episode = []
     frames_per_episode = []
 
-    for i in tqdm(range(0, n_episodes)):
-
+    for _ in tqdm(range(0, n_episodes)):
         if initial_state:
             # init the environment at 'initial_state'
             state = initial_state
@@ -89,13 +85,11 @@ def evaluate(
 
         while not done:
 
-            if random.uniform(0, 1) < epsilon:
-                # Explore action space
-                action = env.action_space.sample()
-            else:
-                # Exploit learned values
-                action = agent.get_action(state)
-
+            action = (
+                env.action_space.sample()
+                if random.uniform(0, 1) < epsilon
+                else agent.get_action(state)
+            )
             next_state, reward, done, info = env.step(action)
 
             frames.append({
